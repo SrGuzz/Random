@@ -31,19 +31,14 @@ services:
       DB_POSTGRESDB_USER: n8n
       DB_POSTGRESDB_PASSWORD: n8n
 
-      # Onde o n8n vai procurar nós customizados
       N8N_CUSTOM_EXTENSIONS: "/home/node/.n8n/custom"
 
-      # Opcional: URL pública se for expor atrás de proxy
       # N8N_HOST: "localhost"
       # N8N_PORT: 5678
       # WEBHOOK_URL: "http://localhost:5678/"
 
-    volumes:
-      # monta sua pasta local ./custom dentro do home do usuário 'node' do container  
+    volumes:  
       - ./custom:/home/node/.n8n/custom
-
-    # O container n8n roda como usuário 'node' por padrão
 
 volumes:
   pgdata:
