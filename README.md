@@ -12,7 +12,7 @@ O node consome a API pública da **Random.org** para gerar um número inteiro al
 
 - **Custom Node (TypeScript)** com `execute()` chamando Random.org.
 - **Inputs**: `Min` e `Max` (apenas números).
-- **Ícone SVG** no node (compatível com tema claro/escuro ou único arquivo).
+- **Ícone SVG** no node.
 - **Infra local com Docker Compose**: n8n + PostgreSQL.
 - **Montagem da pasta de conectores** (`.n8n/custom`) no container.
 - **Guia de testes** (funcional no n8n e opcional unit test).
@@ -29,7 +29,7 @@ n8n-random-node/
 │     ├─ nodes/
 │     │  └─ Random/
 │     │     ├─ Random.node.ts
-│     │     ├─ random.svg            # ícone (e opcional random.dark.svg)
+│     │     ├─ random.svg            # ícone
 │     ├─ dist/
 │     │  └─ nodes/
 │     │     └─ Random/
