@@ -161,61 +161,85 @@ volumes:
 
 ---
 
-## 🧪 Como testar
+## 📌 Fluxo do Workflow
 
-### A. Teste funcional (no editor do n8n)
+O workflow no n8n segue a seguinte ordem:
 
-1. No editor, crie um novo workflow.
-2. Adicione um **Start** e o node **Random (True Random Number Generator)**.
-3. Configure:
-   - **Min**: 1  
-   - **Max**: 60
-4. Conecte **Start → Random** e clique **Execute Node**.
+1. **Webhook** – recebe a requisição `POST` com os valores `Min` e `Max`.  
+2. **Code in JavaScript** – processa/valida os dados recebidos.  
+3. **True Random Number Generator** – gera um número aleatório dentro do intervalo informado.  
+4. **Respond to Webhook** – retorna a resposta em JSON para o frontend.
 
-**Saída esperada** (exemplo):
-
-```json
-{
-  "random": 17,
-  "Min": 1,
-  "Max": 60,
-  "source": "random.org",
-  "requestedAt": "2025-09-22T22:15:10.001Z"
-}
-```
-
-> Execute múltiplas vezes: os valores devem variar, sempre dentro do intervalo.
-
-### B. Teste do endpoint fora do n8n (opcional)
-
-No navegador/terminal, valide a API pública:
-
-```
-https://www.random.org/integers/?num=1&min=1&max=60&col=1&base=10&format=plain&rnd=new
-```
-
-O retorno deve ser um número em `text/plain` seguido de `\n`.
-
-### C. Testes unitários (opcional)
-
-Se quiser formalizar estrutura e regras do node (sem subir n8n):
-
-1. Instale dev deps:
-   ```bash
-   cd custom/n8n-nodes-random
-   npm i -D jest ts-jest @types/jest
-   npx ts-jest config:init
-   ```
-2. Crie `__tests__/Random.node.test.ts` com assert básicos (ex.: descrição, props).
-3. Rode:
-   ```bash
-   npm test
-   ```
-
-> Para testar `execute()` sem internet, **moque** `this.helpers.httpRequest` (injeção via `call/apply` ou wrappers de teste).
+![Fluxo no n8n](./docs/workflow.png)
 
 ---
 
+## 🚀 Como testar
+
+### 1. Ativar o workflow no n8n
+- Abra seu n8n.  
+- Certifique-se de que o workflow está em **modo ativo** (não use `webhook-test`).  
+- Copie a URL do webhook em **produção**, por exemplo:  
+
+```
+http://localhost:5678/webhook/random
+```
+
+> ⚠️ Atenção: a URL de teste (`/webhook-test/...`) só funciona **uma vez**. Use sempre a de **produção** (`/webhook/...`) para testes contínuos.
+
+---
+
+### 2. Acessar o frontend
+Abra o site hospedado no GitHub Pages:  
+
+👉 **[Random Test Frontend](https://srguzz.github.io/Random-Test/)**  
+
+Este site possui um formulário simples com os campos **Min** e **Max**.
+
+---
+
+### 3. Enviar os dados
+1. Digite os valores desejados nos campos `Min` e `Max`.  
+2. Clique em **Gerar**.  
+3. O frontend enviará uma requisição `POST` para o webhook do n8n com o seguinte payload:
+
+```json
+{
+  "Min": 10,
+  "Max": 50
+}
+```
+
+---
+
+### 4. Receber a resposta
+O **Respond to Webhook** do n8n retorna um JSON parecido com este:
+
+```json
+{
+  "random": 27,
+  "Min": 10,
+  "Max": 50,
+  "submittedAt": "2025-09-24T18:53:48.760Z"
+}
+```
+
+---
+
+## ✅ Checklist de funcionamento
+- [ ] Workflow ativado no n8n  
+- [ ] Usando a URL `/webhook/...` (produção)  
+- [ ] Frontend acessado via [GitHub Pages](https://srguzz.github.io/Random-Test/)  
+- [ ] Envio do formulário retorna um JSON com o número aleatório  
+
+---
+
+## 📖 Tecnologias utilizadas
+- [n8n](https://n8n.io/) – Automação de workflows  
+- [JavaScript](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript) – Lógica no frontend/backend  
+- [GitHub Pages](https://pages.github.com/) – Hospedagem do site de testes  
+
+---
 ## 🧩 Como o ícone funciona
 
 No `Random.node.ts`, use:
