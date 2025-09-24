@@ -143,24 +143,6 @@ volumes:
 
 ---
 
-## 🚀 Como rodar do zero
-
-1) **Clone** este repositório (ou crie a estrutura acima).
-2) **Instale** e **builde** o node:
-   ```bash
-   cd custom/n8n-nodes-random
-   npm install
-   npm run build
-   cd ../../
-   ```
-3) **Suba** a stack:
-   ```bash
-   docker compose up -d
-   ```
-4) Acesse **http://localhost:5678** e complete o onboarding do n8n (criar usuário admin).
-
----
-
 ## 📌 Fluxo do Workflow
 
 O workflow no n8n segue a seguinte ordem:
@@ -223,6 +205,24 @@ O **Respond to Webhook** do n8n retorna um JSON parecido com este:
   "submittedAt": "2025-09-24T18:53:48.760Z"
 }
 ```
+
+---
+
+## 📂 Como importar o workflow no n8n
+
+Este repositório contém o arquivo do workflow exportado do n8n:
+
+```
+workflows/random-generator-workflow.json
+```
+
+### Passos para importar:
+1. Abra seu **n8n**.  
+2. Clique em **Workflows** → **Import from File**.  
+3. Selecione o arquivo `random-generator-workflow.json`.  
+4. O fluxo aparecerá no editor do n8n.  
+5. Clique em **Activate** para deixá-lo ativo.  
+6. Copie a URL do webhook de **produção** e use no frontend.  
 
 ---
 
@@ -334,8 +334,3 @@ icon: {
 - [ ] Sem pasta `credentials/` no `dist` (não usamos neste projeto).
 - [ ] Sem warnings bloqueantes (permissões tratadas; `version` removida do compose se preferir).
 
----
-
-## 📄 Licença
-
-MIT (ou adapte conforme sua necessidade). 
