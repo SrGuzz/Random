@@ -1,0 +1,40 @@
+{
+  "name": "n8n-nodes-random",
+  "version": "0.1.0",
+  "description": "Custom n8n node: True Random Number Generator via Random.org",
+  "keywords": [
+    "n8n-community-node",
+    "random",
+    "random.org"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "author": {
+    "name": "",
+    "email": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SrGuzz/Random.git"
+  },
+  "engines": {
+    "node": ">=20.15"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.json && npx copyfiles \"nodes/**/*.svg\" dist"
+  },
+  "n8n": {
+    "nodes": [
+      "dist/nodes/Random/Random.node.js"
+    ]
+  },
+  "devDependencies": {
+    "copyfiles": "^2.4.1",
+    "typescript": "^5.5.0"
+  },
+  "peerDependencies": {
+    "n8n-workflow": "*"
+  }
+}
