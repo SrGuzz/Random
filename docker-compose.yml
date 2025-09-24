@@ -40,7 +40,7 @@ services:
       # WEBHOOK_URL: "http://localhost:5678/"
 
     volumes:
-      # monta sua pasta local ./custom dentro do home do usuário 'node' do container
+      # monta sua pasta local ./custom dentro do home do usuário 'node' do container  
       - ./custom:/home/node/.n8n/custom
 
     # O container n8n roda como usuário 'node' por padrão

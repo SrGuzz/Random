@@ -314,4 +314,4 @@ icon: {
 
 ## 📄 Licença
 
-MIT (ou adapte conforme sua necessidade).
+MIT (ou adapte conforme sua necessidade). 
