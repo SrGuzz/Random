@@ -63,7 +63,8 @@ n8n-random-node/
 No host:
 
 ```bash
-cd custom/n8n-nodes-random
+git clone https://github.com/SrGuzz/Random.git
+cd random/custom/n8n-nodes-random
 npm install
 ```
 
@@ -139,6 +140,12 @@ volumes:
   pgdata:
 ```
 
+Agora rode no terminal
+```bash
+cd ../../
+docker compose up -d
+```
+
 > Dica: versões novas do Compose ignoram `version: "3"`. Pode remover a chave `version` para evitar warnings.
 
 ---
@@ -160,15 +167,23 @@ O workflow no n8n segue a seguinte ordem:
 
 ### 1. Ativar o workflow no n8n
 - Abra seu n8n.  
-- Certifique-se de que o workflow está em **modo ativo** (não use `webhook-test`).  
-- Copie a URL do webhook em **produção**, por exemplo:  
-
 ```
-http://localhost:5678/webhook/random
+http://localhost:5678
 ```
 
-> ⚠️ Atenção: a URL de teste (`/webhook-test/...`) só funciona **uma vez**. Use sempre a de **produção** (`/webhook/...`) para testes contínuos.
+Este repositório contém o arquivo do workflow exportado do n8n para download:
 
+```
+workflows/random-generator-workflow.json
+```
+
+### Passos para importar:
+1. No seu **n8n** clique em **Start from scratch**
+2. Clique nos tres pontinhos no canto superior direito e em seguida **Import from File**.  
+3. Selecione o arquivo `random-generator-workflow.json`.  
+4. O fluxo aparecerá no editor do n8n.  
+5. Clique ao lado de **Inactive** para deixá-lo ativo.
+   
 ---
 
 ### 2. Acessar o frontend
@@ -208,29 +223,11 @@ O **Respond to Webhook** do n8n retorna um JSON parecido com este:
 
 ---
 
-## 📂 Como importar o workflow no n8n
-
-Este repositório contém o arquivo do workflow exportado do n8n:
-
-```
-workflows/random-generator-workflow.json
-```
-
-### Passos para importar:
-1. Abra seu **n8n**.  
-2. Clique em **Workflows** → **Import from File**.  
-3. Selecione o arquivo `random-generator-workflow.json`.  
-4. O fluxo aparecerá no editor do n8n.  
-5. Clique em **Activate** para deixá-lo ativo.  
-6. Copie a URL do webhook de **produção** e use no frontend.  
-
----
-
 ## ✅ Checklist de funcionamento
 - [ ] Workflow ativado no n8n  
 - [ ] Usando a URL `/webhook/...` (produção)  
 - [ ] Frontend acessado via [GitHub Pages](https://srguzz.github.io/Random-Test/)  
-- [ ] Envio do formulário retorna um JSON com o número aleatório  
+- [ ] Envio do formulário retorna um JSON com o número aleatório e exibe na tela 
 
 ---
 
@@ -238,9 +235,11 @@ workflows/random-generator-workflow.json
 - [n8n](https://n8n.io/) – Automação de workflows  
 - [JavaScript](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript) – Lógica no frontend/backend  
 - [GitHub Pages](https://pages.github.com/) – Hospedagem do site de testes  
+- [Docker](https://www.docker.com/) – Containerização da aplicação  
+- [PostgreSQL](https://www.postgresql.org/) – Banco de dados relacional para persistência do n8n  
 
 ---
-## 🧩 Como o ícone funciona
+## 🧩 Como o ícone do node funciona
 
 No `Random.node.ts`, use:
 
@@ -332,5 +331,4 @@ icon: {
 - [ ] `docker compose up -d` sobe **db** e **n8n** com sucesso.
 - [ ] Node **Random** aparece no editor e executa retornando número válido.
 - [ ] Sem pasta `credentials/` no `dist` (não usamos neste projeto).
-- [ ] Sem warnings bloqueantes (permissões tratadas; `version` removida do compose se preferir).
 
