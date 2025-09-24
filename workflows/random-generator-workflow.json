@@ -1,0 +1,120 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "={{ $json }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        880,
+        224
+      ],
+      "id": "f35d3592-f263-42f6-ab91-2b4d2fa1f542",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "random",
+        "responseMode": "responseNode",
+        "options": {
+          "allowedOrigins": "*",
+          "ignoreBots": true
+        }
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        304,
+        224
+      ],
+      "id": "3dfcfed4-1abd-46d0-afb1-b4732e255eb5",
+      "name": "Webhook",
+      "webhookId": "6880a38b-2dc2-4da1-a124-f7d79782c3e2",
+      "executeOnce": false
+    },
+    {
+      "parameters": {
+        "min": "={{ $json.Min }}",
+        "max": "={{ $json.Max }}"
+      },
+      "type": "CUSTOM.random",
+      "typeVersion": 1,
+      "position": [
+        704,
+        224
+      ],
+      "id": "ff19aacc-8cdb-471c-996d-f574945d0461",
+      "name": "True Random Number Generator1"
+    },
+    {
+      "parameters": {
+        "jsCode": "return [\n  {\n    json: JSON.parse($input.first().json.body)\n  }\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        512,
+        224
+      ],
+      "id": "9dabf2a9-5473-4c50-90e7-13bb5387e44b",
+      "name": "Code in JavaScript"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "True Random Number Generator1": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Respond to Webhook": {
+      "main": [
+        []
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "True Random Number Generator1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "ebb24b79-b177-4333-8f55-e0ed329b0b6e",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "32f238fa101180cf767c0657a791004fdc5953dbacd1cbe04e120822c368735e"
+  },
+  "id": "CPyCqVh4hbZTyqOj",
+  "tags": []
+}
